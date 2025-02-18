@@ -16,11 +16,11 @@ if not os.path.exists(ADDON_DIR):
     os.makedirs(ADDON_DIR, exist_ok=True)
 
 # Mengaburkan nama folder ekstraksi
-ENCODED_FOLDER = "UlItVC1CLjNfVjAy"
-EXTRACT_FOLDER = os.path.join(ADDON_DIR, base64.b64decode(ENCODED_FOLDER).decode('utf-8'))
+ENCODED_FOLDER = "UlItVC1CLjNfVjAz"
+EXTRACT_FOLDER = os.path.join(TEMP_DIR, base64.b64decode(ENCODED_FOLDER).decode('utf-8'))
 
 # Mengaburkan URL repository
-ENCODED_REPO = "aHR0cHM6Ly9naXRodWIuY29tL3Jyc3R1ZGlvZGV2ZWxvcG1lbnQvUlItVC1CLjNfVjAy"
+ENCODED_REPO = "aHR0cHM6Ly9naXRodWIuY29tL3Jyc3R1ZGlvZGV2ZWxvcG1lbnQvUlItVC1CLjNfVjAz"
 GITHUB_REPO = base64.b64decode(ENCODED_REPO).decode('utf-8')
 
 
