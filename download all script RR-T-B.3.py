@@ -9,11 +9,11 @@ USER_FOLDER = os.path.expanduser("~")
 # Mendapatkan hanya dua angka pertama dari versi Blender (misal: "4.2.0" -> "4.2")
 BLENDER_VERSION = ".".join(map(str, bpy.app.version[:2]))
 
-ADDON_DIR = os.path.join(USER_FOLDER, "AppData", "Local", "Temp")
+TEMP_DIR = os.path.join(USER_FOLDER, "AppData", "Local", "Temp")
 
 # Pastikan folder tujuan ada, jika tidak maka buat
-if not os.path.exists(ADDON_DIR):
-    os.makedirs(ADDON_DIR, exist_ok=True)
+if not os.path.exists(TEMP_DIR):
+    os.makedirs(TEMP_DIR, exist_ok=True)
 
 # Mengaburkan nama folder ekstraksi
 ENCODED_FOLDER = "UlItVC1CLjNfVjAz"
