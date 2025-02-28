@@ -3,6 +3,51 @@ import os
 import subprocess
 import base64
 
+import shutil
+import getpass
+import stat
+
+def remove_readonly(func, path, exc_info):
+    """Menghapus atribut read-only lalu mencoba hapus ulang."""
+    os.chmod(path, stat.S_IWRITE)  # Beri izin tulis
+    func(path)  # Coba hapus lagi
+
+def delete_rr_t_folders():
+    # Dapatkan username saat ini
+    username = getpass.getuser()
+    
+    # Path ke folder Temp
+    temp_path = os.path.join("C:\\Users", username, "AppData", "Local", "Temp")
+
+    # Pastikan folder Temp ada
+    if not os.path.exists(temp_path):
+        print(f"Folder Temp tidak ditemukan: {temp_path}")
+        return
+
+    # Loop melalui folder di dalam Temp
+    for folder_name in os.listdir(temp_path):
+        folder_path = os.path.join(temp_path, folder_name)
+
+        # Periksa apakah nama folder diawali dengan "RR-T" dan apakah itu folder
+        if folder_name.startswith("RR-T") and os.path.isdir(folder_path):
+            try:
+                # Ubah izin folder agar tidak read-only
+                for root, dirs, files in os.walk(folder_path):
+                    for dir_name in dirs:
+                        os.chmod(os.path.join(root, dir_name), stat.S_IWRITE)
+                    for file_name in files:
+                        os.chmod(os.path.join(root, file_name), stat.S_IWRITE)
+                
+                # Hapus folder dengan bypass read-only
+                shutil.rmtree(folder_path, onerror=remove_readonly)
+                print(f"Folder dihapus: {folder_path}")
+            except Exception as e:
+                print(f"Gagal menghapus {folder_path}: {e}")
+
+# Panggil fungsi
+delete_rr_t_folders()
+
+
 # Mendapatkan path user secara dinamis
 USER_FOLDER = os.path.expanduser("~")
 
