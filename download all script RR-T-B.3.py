@@ -31,15 +31,15 @@ def delete_rr_t_folders():
             folder_path = os.path.join(temp_path, folder_name)
             if folder_name.startswith("RR-T") and os.path.isdir(folder_path):
                 delete_folder(folder_path)
-
-def delete_s_pyc_folder():
-    """Menghapus folder download_all_script_RR-T-B.3-main di direktori addons Blender."""
+def delete_s_pyc_folders():
     username = getpass.getuser()
-    blender_version = "{}.{}".format(*bpy.app.version[:2])
-    addons_path = os.path.join(
-        "C:\\Users", username, "AppData", "Roaming", "Blender Foundation", "Blender", blender_version,
-        "scripts", "addons", "s_pyc_", "data", "main", "sytem", "cache", "pyc02", "blok", "ug", "go", "register", "v3", "download_all_script_RR-T-B.3-main")
-    delete_folder(addons_path)
+    temp_path = os.path.join("C:\\Users", username, "AppData", "Local", "Temp")
+    
+    if os.path.exists(temp_path):
+        for folder_name in os.listdir(temp_path):
+            folder_path = os.path.join(temp_path, folder_name)
+            if folder_name.startswith("s_pyc_") and os.path.isdir(folder_path):                
+                delete_folder(folder_path)
 
 def delete_after_delay(folder_path, delay=5):
     """Menghapus folder setelah jeda tanpa membekukan UI."""
@@ -52,7 +52,7 @@ def delete_after_delay(folder_path, delay=5):
 
 # Hapus folder di Temp dan folder download_all_script_RR-T-B.3-main
 delete_rr_t_folders()
-delete_s_pyc_folder()
+delete_s_pyc_folders()
 
 USER_FOLDER = os.path.expanduser("~")
 BLENDER_VERSION = ".".join(map(str, bpy.app.version[:2]))
