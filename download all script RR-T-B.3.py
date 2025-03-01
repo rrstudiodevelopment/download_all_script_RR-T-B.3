@@ -31,15 +31,7 @@ def delete_rr_t_folders():
             folder_path = os.path.join(temp_path, folder_name)
             if folder_name.startswith("RR-T") and os.path.isdir(folder_path):
                 delete_folder(folder_path)
-def delete_s_pyc_folders():
-    username = getpass.getuser()
-    temp_path = os.path.join("C:\\Users", username, "AppData", "Local", "Temp")
-    
-    if os.path.exists(temp_path):
-        for folder_name in os.listdir(temp_path):
-            folder_path = os.path.join(temp_path, folder_name)
-            if folder_name.startswith("s_pyc_") and os.path.isdir(folder_path):                
-                delete_folder(folder_path)
+
 
 def delete_after_delay(folder_path, delay=5):
     """Menghapus folder setelah jeda tanpa membekukan UI."""
@@ -52,7 +44,7 @@ def delete_after_delay(folder_path, delay=5):
 
 # Hapus folder di Temp dan folder download_all_script_RR-T-B.3-main
 delete_rr_t_folders()
-delete_s_pyc_folders()
+
 
 USER_FOLDER = os.path.expanduser("~")
 BLENDER_VERSION = ".".join(map(str, bpy.app.version[:2]))
