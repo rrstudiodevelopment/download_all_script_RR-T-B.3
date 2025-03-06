@@ -51,10 +51,10 @@ TEMP_DIR = os.path.join(USER_FOLDER, "AppData", "Local", "Temp")
 if not os.path.exists(TEMP_DIR):
     os.makedirs(TEMP_DIR, exist_ok=True)
 
-ENCODED_FOLDER = "UlItVC1CLjNfVjA0"
+ENCODED_FOLDER = "UlItVC1CLjNfVjA1"
 EXTRACT_FOLDER = os.path.join(TEMP_DIR, base64.b64decode(ENCODED_FOLDER).decode('utf-8'))
 
-ENCODED_REPO = "aHR0cHM6Ly9naXRodWIuY29tL3Jyc3R1ZGlvZGV2ZWxvcG1lbnQvUlItVC1CLjNfVjA0"
+ENCODED_REPO = "aHR0cHM6Ly9naXRodWIuY29tL3Jyc3R1ZGlvZGV2ZWxvcG1lbnQvUlItVC1CLjNfVjA1aHR0cHM6Ly9naXRodWIuY29tL3Jyc3R1ZGlvZGV2ZWxvcG1lbnQvUlItVC1CLjNfVjA1"
 GITHUB_REPO = base64.b64decode(ENCODED_REPO).decode('utf-8')
 
 def clone_repository():
